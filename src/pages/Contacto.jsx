@@ -10,27 +10,27 @@ const Contacto = () => {
   };
 
   return (
-    <main className="container-fluid py-5">
-      <h2 className="text-center mb-4">Contáctanos</h2>
-      <p className="text-center mb-5">
+    <main className="container-fluid py-6">
+      <h2 className="text-center mb-2">Contáctanos</h2>
+      <p className="text-center mb-0">
         ¿Tienes alguna duda o sugerencia? Completa el formulario y nos pondremos en contacto contigo.
       </p>
       <div className="row justify-content-center">
-        <div className="col-md-6">
+        <div className="col-md-7">
           <form id="contactForm" onSubmit={handleSubmit} className="form-login">
-            <div className="mb-3">
+            <div className="mb-2">
               <label htmlFor="nombre" className="form-label">Nombre completo</label>
               <input type="text" className="form-control" id="nombre" required />
             </div>
-            <div className="mb-3">
+            <div className="mb-2">
               <label htmlFor="email" className="form-label">Correo electrónico</label>
               <input type="email" className="form-control" id="email" required />
             </div>
-            <div className="mb-3">
+            <div className="mb-2">
               <label htmlFor="asunto" className="form-label">Asunto</label>
               <input type="text" className="form-control" id="asunto" required />
             </div>
-            <div className="mb-3">
+            <div className="mb-2">
               <label htmlFor="mensaje" className="form-label">Mensaje</label>
               <textarea className="form-control" id="mensaje" rows="5" required></textarea>
             </div>

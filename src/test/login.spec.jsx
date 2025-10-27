@@ -17,6 +17,7 @@ vi.mock("react-router-dom", async () => {
 describe("Login - pruebas unitarias", () => {
   beforeEach(() => {
     sessionStorage.clear();
+    localStorage.clear();
     mockNavigate.mockClear();
   });
 
@@ -35,7 +36,7 @@ describe("Login - pruebas unitarias", () => {
     expect(screen.getByPlaceholderText(/Contraseña/i)).toBeInTheDocument();
   });
 
-  it("muestra error si los campos están vacíos", () => {
+  it("no navega si los campos están vacíos", () => {
     render(
       <MemoryRouter>
         <AuthProvider>
@@ -45,9 +46,9 @@ describe("Login - pruebas unitarias", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: /Iniciar sesión/i }));
-    expect(
-      screen.getByText(/Por favor completa todos los campos/i)
-    ).toBeInTheDocument();
+
+    // ✅ No debe navegar porque los campos están vacíos
+    expect(mockNavigate).not.toHaveBeenCalled();
   });
 
   it("permite entrar como invitado", () => {
@@ -62,7 +63,8 @@ describe("Login - pruebas unitarias", () => {
     fireEvent.click(
       screen.getByRole("button", { name: /Entrar como Invitado/i })
     );
-    expect(screen.getByText(/Entraste como invitado/i)).toBeInTheDocument();
+
+    // ✅ Debe navegar directamente a /tabla
     expect(mockNavigate).toHaveBeenCalledWith("/tabla");
   });
 });

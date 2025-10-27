@@ -43,12 +43,12 @@ const NavBar = () => {
                 <li className="nav-item">
                   <Link className="nav-link" to="/contacto">Contacto</Link>
                 </li>
-                <li className="nav-item d-flex align-items-center">
+                <li className="text-light me-3 d-flex align-items-center">
                   {usuario.equipo && (
                     <img
                       src={`/Imagenes/${usuario.equipo}`}
                       alt={usuario.equipo}
-                      style={{ width: "30px", height: "30px", marginRight: "8px" }}
+                      style={{ width: "40px", height: "40px", marginRight: "0px" }}
                     />
                   )}
                   <Link className="nav-link" to="/perfil">

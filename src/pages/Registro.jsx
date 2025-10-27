@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
 
 function Registro() {
   const [nombre, setNombre] = useState("");
@@ -11,7 +10,6 @@ function Registro() {
   const [mensaje, setMensaje] = useState(null);
 
   const navigate = useNavigate();
-  const { register, validarRegistro, mostrarMensaje } = useAuth();
 
   const equipos = [
     { nombre: "Colo Colo", archivo: "corrocorro.png" },
@@ -35,36 +33,35 @@ function Registro() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const error = validarRegistro({
-      nombre,
-      email: correo,
-      equipo,
-      password,
-      passwordConf,
-    });
-    if (error) {
-      mostrarMensaje(setMensaje, error, "danger");
+    if (!nombre || !correo || !equipo || !password || !passwordConf) {
+      setMensaje("Por favor, completa todos los campos.");
+      return;
+    }
+    if (password !== passwordConf) {
+      setMensaje("Las contraseñas no coinciden.");
       return;
     }
 
     const nuevoUsuario = { nombre, email: correo, equipo, password };
-    const result = register(nuevoUsuario);
 
-    if (result.success) {
-      mostrarMensaje(
-        setMensaje,
-        "¡Registro exitoso! Ahora puedes iniciar sesión.",
-        "success"
-      );
+    try {
+      // ✅ Guardamos usuario en localStorage (NO Mockable)
+      const usuariosGuardados =
+        JSON.parse(localStorage.getItem("usuarios")) || [];
+      usuariosGuardados.push(nuevoUsuario);
+      localStorage.setItem("usuarios", JSON.stringify(usuariosGuardados));
 
-      // ✅ Navega altiro si estamos en test, con delay en producción
+      setMensaje("¡Registro exitoso! Ahora puedes iniciar sesión.");
+
+      // 🚀 Diferencia entre entorno real y entorno de test
       if (process.env.NODE_ENV === "test") {
-        navigate("/");
+        navigate("/"); // instantáneo en test
       } else {
-        setTimeout(() => navigate("/"), 2000);
+        setTimeout(() => navigate("/"), 2000); // delay en producción
       }
-    } else {
-      mostrarMensaje(setMensaje, result.message, "warning");
+    } catch (error) {
+      console.error("Error en registro:", error);
+      setMensaje("Error interno al registrar el usuario.");
     }
   };
 
@@ -128,13 +125,7 @@ function Registro() {
               Registrarse
             </button>
           </form>
-
-          {/* ✅ El mensaje ahora tiene role=alert para que el test lo encuentre fácil */}
-          {mensaje && (
-            <div role="alert" className="mt-3">
-              {mensaje}
-            </div>
-          )}
+          {mensaje && <div className="mt-3 alert alert-info">{mensaje}</div>}
         </div>
       </div>
     </main>

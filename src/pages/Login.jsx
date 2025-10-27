@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function Login() {
-  const { login, mostrarMensaje } = useAuth();
+  const { mostrarMensaje } = useAuth(); // usamos solo mostrarMensaje del contexto
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mensaje, setMensaje] = useState(null);
@@ -13,21 +13,51 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const result = await login({ email, password });
-
-    if (result.success) {
+    // ✅ 1. Buscar usuario en localStorage
+    const usuariosLocal = JSON.parse(localStorage.getItem("usuarios")) || [];
+    const usuarioLocal = usuariosLocal.find(
+      (u) => u.email === email && u.password === password
+    );
+    if (usuarioLocal) {
+      sessionStorage.setItem("usuario", JSON.stringify(usuarioLocal));
       mostrarMensaje(setMensaje, "Inicio de sesión exitoso", "success");
-      setTimeout(() => navigate("/tabla"), 1500); // ✅ redirige después de 1.5s
+      setTimeout(() => {
+        navigate("/tabla");
+        window.location.reload(); // 🔄 recarga la página entera
+      }, 1500);
+      return;
+    }
+    // ✅ 2. Si no existe en localStorage, intenta en Mockable.io
+    try {
+      const res = await fetch("http://demo3526643.mockable.io/usuarios");
+      if (!res.ok) throw new Error("Error en el servidor remoto");
+
+      const usuariosMock = await res.json();
+      const usuarioMock = usuariosMock.find(
+        (u) => u.email === email && u.password === password
+      );
+
+    if (usuarioMock) {
+      sessionStorage.setItem("usuario", JSON.stringify(usuarioMock));
+      mostrarMensaje(setMensaje, "Inicio de sesión exitoso", "success");
+      setTimeout(() => {
+        navigate("/tabla");
+        window.location.reload(); // 🔄 forzar actualización de la navbar
+      }, 1500);
     } else {
-      mostrarMensaje(setMensaje, result.message, "danger");
+      mostrarMensaje(setMensaje, "Correo o contraseña incorrectos", "danger");
+    }
+    } catch (error) {
+      console.error("Error al conectar con Mockable:", error);
+      mostrarMensaje(setMensaje, "Error al conectar con el servidor.", "danger");
     }
   };
 
   return (
     <div className="container mt-5">
       <h2 className="text-center mb-4">Inicio de sesión</h2>
-      <form onSubmit={handleSubmit} className="mx-auto" style={{ maxWidth: "400px" }}>
-        <div className="mb-3">
+      <form onSubmit={handleSubmit} className="mx-auto" style={{ maxWidth: "550px" }}>
+        <div className="mb-4">
           <input
             type="email"
             placeholder="Correo electrónico"
@@ -37,7 +67,7 @@ export default function Login() {
             required
           />
         </div>
-        <div className="mb-3">
+        <div className="mb-4">
           <input
             type="password"
             placeholder="Contraseña"
@@ -50,18 +80,16 @@ export default function Login() {
         <button type="submit" className="btn btn-primary w-100">
           Iniciar sesión
         </button>
+        <div className="d-grid gap-2 mt-4">
+          <button
+            type="button"
+            className="btn-invitado"
+            onClick={() => navigate("/tabla")}
+          >
+            Entrar como Invitado
+          </button>
+        </div>
       </form>
-
-      <div className="d-grid gap-2 mt-3">
-        <button
-          className="btn btn-secondary"
-          onClick={() => {
-            navigate("/"); // 🔹 invitado directo
-          }}
-        >
-          Entrar como Invitado
-        </button>
-      </div>
 
       <div className="mt-3">{mensaje}</div>
 

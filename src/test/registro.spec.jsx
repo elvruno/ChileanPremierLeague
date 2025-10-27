@@ -2,7 +2,6 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { vi } from "vitest";
 import Registro from "../pages/Registro";
-import { AuthProvider } from "../contexts/AuthContext";
 
 // Mock de useNavigate
 const mockNavigate = vi.fn();
@@ -23,14 +22,12 @@ describe("Registro - pruebas unitarias básicas", () => {
 
   test("guarda en localStorage y muestra mensaje de éxito al registrarse correctamente", async () => {
     render(
-      <AuthProvider>
-        <MemoryRouter>
-          <Registro />
-        </MemoryRouter>
-      </AuthProvider>
+      <MemoryRouter>
+        <Registro />
+      </MemoryRouter>
     );
 
-    // Llenar los campos
+    // Completar formulario
     fireEvent.change(screen.getByPlaceholderText("Nombre completo"), {
       target: { value: "Juan Pérez" },
     });
@@ -49,17 +46,17 @@ describe("Registro - pruebas unitarias básicas", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Registrarse" }));
 
-    // Esperar a que aparezca el mensaje
+    // Verificar mensaje
     await waitFor(() => {
       expect(
-        screen.getByText(/¡Registro exitoso!/i)
+        screen.getByText("¡Registro exitoso! Ahora puedes iniciar sesión.")
       ).toBeInTheDocument();
     });
 
-    // Validar navegación
+    // Verificar navigate
     expect(mockNavigate).toHaveBeenCalledWith("/");
 
-    // Validar almacenamiento en localStorage
+    // Verificar localStorage
     const usuarios = JSON.parse(localStorage.getItem("usuarios"));
     expect(usuarios).toEqual(
       expect.arrayContaining([
