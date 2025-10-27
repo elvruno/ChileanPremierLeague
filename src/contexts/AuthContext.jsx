@@ -30,18 +30,40 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const login = ({ email, password }) => {
-    const userFound = usuarios.find(
-      (u) => u.email === email && u.password === password
-    );
+  // 🔥 login actualizado con Mockable.io
+  const login = async ({ email, password }) => {
+    try {
+      // 1. Consultar primero al endpoint de Mockable.io
+      const response = await fetch("https://demo3526643.mockable.io/usuarios");
+      const usuariosMock = await response.json();
 
-    if (userFound) {
-      const userData = { ...userFound, rol: "usuario" };
-      setUsuario(userData);
-      sessionStorage.setItem("usuario", JSON.stringify(userData));
-      return { success: true };
-    } else {
+      const userMock = usuariosMock.find(
+        (u) => u.email === email && u.password === password
+      );
+
+      if (userMock) {
+        const userData = { ...userMock, rol: "usuario" };
+        setUsuario(userData);
+        sessionStorage.setItem("usuario", JSON.stringify(userData));
+        return { success: true, source: "mockable" };
+      }
+
+      // 2. Si no existe en Mockable, buscar en localStorage
+      const userLocal = usuarios.find(
+        (u) => u.email === email && u.password === password
+      );
+
+      if (userLocal) {
+        const userData = { ...userLocal, rol: "usuario" };
+        setUsuario(userData);
+        sessionStorage.setItem("usuario", JSON.stringify(userData));
+        return { success: true, source: "local" };
+      }
+
       return { success: false, message: "Correo o contraseña incorrectos" };
+    } catch (error) {
+      console.error("Error al conectar con Mockable.io:", error);
+      return { success: false, message: "Error de conexión con el servidor" };
     }
   };
 
