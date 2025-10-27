@@ -1,0 +1,234 @@
+:root {
+  --primary-blue: #0d6efd;
+  --shadow-light: rgba(0, 0, 0, 0.15);
+  --shadow-hover: rgba(0, 0, 0, 0.3);
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #212529;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex-grow: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+h1,
+h2 {
+  color: var(--primary-blue);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.navbar {
+  width: 100%;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 1rem;
+}
+
+footer {
+  background-color: #212529;
+  color: white;
+  padding: 1rem 0;
+  text-align: center;
+  margin-top: auto;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.social-icons a {
+  font-size: 1.5rem;
+}
+
+form {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(13, 110, 253, 0.15);
+  max-width: 500px;
+  margin: 2rem auto;
+  transition: box-shadow 0.3s ease;
+}
+
+form:hover {
+  box-shadow: 0 12px 30px rgba(13, 110, 253, 0.25);
+}
+
+#mensajeLogin,
+#mensajeRegistro,
+#mensajeConfirmacion {
+  font-weight: 600;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.card-profile {
+  max-width: 500px;
+  margin: 3rem auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(13, 110, 253, 0.15);
+  text-align: center;
+}
+
+.card-profile .custom-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3);
+}
+
+.table {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.table th {
+  background-color: var(--primary-blue);
+  color: white;
+  text-align: center;
+}
+
+.table td,
+.table th {
+  padding: 0.75rem;
+  vertical-align: middle;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #f1f7ff;
+}
+
+.team-logo,
+.team-logo-match {
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.match-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.match-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(13, 110, 253, 0.25);
+}
+
+.vs-text {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #6c757d;
+  margin: 0 10px;
+}
+
+.match-time,
+.match-stadium {
+  font-weight: 600;
+  color: var(--primary-blue);
+}
+
+.news-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto 3rem;
+  padding: 0 1rem;
+}
+
+.news-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  overflow: hidden;
+}
+
+.news-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.news-image {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  border-bottom: 4px solid var(--primary-blue);
+}
+
+.news-title {
+  font-weight: 700;
+  font-size: 1.2rem;
+  padding: 1rem 1rem 0.5rem;
+  color: #222;
+}
+
+.news-date {
+  font-size: 0.9rem;
+  color: #666;
+  padding: 0 1rem 1rem;
+}
+
+@media (max-width: 768px) {
+  .team-logo,
+  .team-logo-match {
+    width: 28px;
+    height: 28px;
+  }
+
+  .vs-text {
+    font-size: 1rem;
+    margin: 0 5px;
+  }
+
+  form {
+    margin: 1.5rem 1rem;
+    padding: 1.5rem;
+  }
+
+  .news-container {
+    grid-template-columns: 1fr;
+  }
+  .footer a:hover {
+  color: #0d6efd; 
+  transform: scale(1.1);
+  transition: 0.3s ease;
+  } 
+  
+
+
+}
