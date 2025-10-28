@@ -43,6 +43,15 @@ const NavBar = () => {
                 <li className="nav-item">
                   <Link className="nav-link" to="/contacto">Contacto</Link>
                 </li>
+
+                {usuario.email === "admin@test.com" && (
+                  <li className="nav-item">
+                    <Link className="nav-link text-warning fw-bold" to="/admin">
+                      AdminPanel
+                    </Link>
+                  </li>
+                )}
+
                 <li className="text-light me-3 d-flex align-items-center">
                   {usuario.equipo && (
                     <img

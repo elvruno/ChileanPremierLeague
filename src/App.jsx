@@ -11,6 +11,7 @@ import Noticias from "./pages/Noticias";
 import Seleccion from "./pages/Seleccion";
 import Contacto from "./pages/Contacto";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminPanel from "./pages/AdminPanel";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/registro" element={<Registro />} />
             <Route path="/tabla" element={<Tabla />} />
             <Route path="/ranking" element={<Ranking />} />
+            <Route path="/admin" element={<AdminPanel />} />
 
             <Route
               path="/noticias"

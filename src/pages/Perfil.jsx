@@ -22,17 +22,26 @@ const Perfil = () => {
       <div className="card-profile">
         <img
           src={
-            usuario?.equipo
+            usuario?.equipo && usuario.equipo.trim() !== ""
               ? `/Imagenes/${usuario.equipo}`
               : "/Imagenes/default-profile.png"
           }
-          alt={usuario?.equipo || "Perfil"}
+          alt={usuario?.nombre || "Perfil"}
           className="custom-image"
         />
         <h3 id="nombreUsuario">{usuario?.nombre}</h3>
         <p><strong>Correo:</strong> {usuario?.email}</p>
-        <p><strong>Equipo Favorito:</strong> {usuario?.equipo?.replace(".png", "")}</p>
-        <button id="btnCerrarSesion" className="btn btn-danger mt-3" onClick={handleLogout}>
+        <p>
+          <strong>Equipo Favorito:</strong>{" "}
+          {usuario?.equipo && usuario.equipo.trim() !== ""
+            ? usuario.equipo.replace(".png", "")
+            : "Ninguno"}
+        </p>
+        <button
+          id="btnCerrarSesion"
+          className="btn btn-danger mt-3"
+          onClick={handleLogout}
+        >
           Cerrar Sesión
         </button>
       </div>

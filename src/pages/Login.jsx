@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function Login() {
-  const { mostrarMensaje } = useAuth(); // usamos solo mostrarMensaje del contexto
+  const { mostrarMensaje } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mensaje, setMensaje] = useState(null);
@@ -18,15 +18,22 @@ export default function Login() {
     const usuarioLocal = usuariosLocal.find(
       (u) => u.email === email && u.password === password
     );
+
     if (usuarioLocal) {
       sessionStorage.setItem("usuario", JSON.stringify(usuarioLocal));
       mostrarMensaje(setMensaje, "Inicio de sesión exitoso", "success");
       setTimeout(() => {
-        navigate("/tabla");
-        window.location.reload(); // 🔄 recarga la página entera
+        // 🚀 Si es admin, va al panel
+        if (usuarioLocal.email === "admin@test.com") {
+          navigate("/admin");
+        } else {
+          navigate("/tabla");
+        }
+        window.location.reload();
       }, 1500);
       return;
     }
+
     // ✅ 2. Si no existe en localStorage, intenta en Mockable.io
     try {
       const res = await fetch("http://demo3526643.mockable.io/usuarios");
@@ -37,16 +44,21 @@ export default function Login() {
         (u) => u.email === email && u.password === password
       );
 
-    if (usuarioMock) {
-      sessionStorage.setItem("usuario", JSON.stringify(usuarioMock));
-      mostrarMensaje(setMensaje, "Inicio de sesión exitoso", "success");
-      setTimeout(() => {
-        navigate("/tabla");
-        window.location.reload(); // 🔄 forzar actualización de la navbar
-      }, 1500);
-    } else {
-      mostrarMensaje(setMensaje, "Correo o contraseña incorrectos", "danger");
-    }
+      if (usuarioMock) {
+        sessionStorage.setItem("usuario", JSON.stringify(usuarioMock));
+        mostrarMensaje(setMensaje, "Inicio de sesión exitoso", "success");
+        setTimeout(() => {
+          // 🚀 Si es admin, va al panel
+          if (usuarioMock.email === "admin@test.com") {
+            navigate("/admin");
+          } else {
+            navigate("/tabla");
+          }
+          window.location.reload();
+        }, 1500);
+      } else {
+        mostrarMensaje(setMensaje, "Correo o contraseña incorrectos", "danger");
+      }
     } catch (error) {
       console.error("Error al conectar con Mockable:", error);
       mostrarMensaje(setMensaje, "Error al conectar con el servidor.", "danger");
