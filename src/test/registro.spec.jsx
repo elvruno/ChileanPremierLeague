@@ -3,7 +3,6 @@ import { MemoryRouter } from "react-router-dom";
 import { vi } from "vitest";
 import Registro from "../pages/Registro";
 
-// Mock de useNavigate
 const mockNavigate = vi.fn();
 vi.mock("react-router-dom", async () => {
   const actual = await vi.importActual("react-router-dom");
@@ -27,7 +26,6 @@ describe("Registro - pruebas unitarias básicas", () => {
       </MemoryRouter>
     );
 
-    // Completar formulario
     fireEvent.change(screen.getByPlaceholderText("Nombre completo"), {
       target: { value: "Juan Pérez" },
     });
@@ -45,18 +43,12 @@ describe("Registro - pruebas unitarias básicas", () => {
     });
 
     fireEvent.click(screen.getByRole("button", { name: "Registrarse" }));
-
-    // Verificar mensaje
     await waitFor(() => {
       expect(
         screen.getByText("¡Registro exitoso! Ahora puedes iniciar sesión.")
       ).toBeInTheDocument();
     });
-
-    // Verificar navigate
     expect(mockNavigate).toHaveBeenCalledWith("/");
-
-    // Verificar localStorage
     const usuarios = JSON.parse(localStorage.getItem("usuarios"));
     expect(usuarios).toEqual(
       expect.arrayContaining([

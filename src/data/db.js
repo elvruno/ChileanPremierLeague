@@ -1,6 +1,3 @@
-// src/data/db.js
-
-// ================= EQUIPOS =================
 export let equipos = [
   { id: 1, nombre: "Coquimbo Unido", logo: "/Imagenes/Coquimbo_Unido.png", pj: 24, pg: 18, pe: 5, pp: 1, gf: 37, gc: 12 },
   { id: 2, nombre: "Universidad Católica", logo: "/Imagenes/hijo.png", pj: 24, pg: 13, pe: 6, pp: 5, gf: 38, gc: 22 },
@@ -20,7 +17,7 @@ export let equipos = [
   { id: 16, nombre: "Iquique", logo: "/Imagenes/Iquique.png", pj: 24, pg: 3, pe: 5, pp: 16, gf: 25, gc: 52 }
 ];
 
-// ================= PARTIDOS =================
+
 export let partidos = [
   { id: 1, local: "Palestino", logoLocal: "/Imagenes/Palestino.png", visita: "Everton", logoVisita: "/Imagenes/eBerton.png", hora: "17:00", estadio: "La Cisterna" },
   { id: 2, local: "La Serena", logoLocal: "/Imagenes/serena.png", visita: "Audax Italiano", logoVisita: "/Imagenes/Audax_Italiano_Escudo.png", hora: "15:00", estadio: "La Portada" },
@@ -32,10 +29,7 @@ export let partidos = [
   { id: 8, local: "Colo Colo", logoLocal: "/Imagenes/corrocorro.png", visita: "Deportes Limache", logoVisita: "/Imagenes/limache.png", hora: "18:00", estadio: "Estadio Monumental" }
 ];
 
-// ================= FUNCIONES AUXILIARES =================
 const calcularPuntos = (pg, pe) => pg * 3 + pe * 1;
-
-// ================= CRUD EQUIPOS =================
 export const getEquipos = () =>
   equipos
     .map((e) => ({
@@ -45,7 +39,7 @@ export const getEquipos = () =>
     }))
     .sort((a, b) => {
       if (b.pts === a.pts) {
-        return b.dg - a.dg; // desempate por diferencia de goles
+        return b.dg - a.dg; 
       }
       return b.pts - a.pts;
     });
@@ -77,7 +71,6 @@ export const deleteEquipo = (id) => {
   equipos = equipos.filter((eq) => eq.id !== id);
 };
 
-// ================= CRUD PARTIDOS =================
 export const getPartidos = () => partidos;
 
 export const addPartido = (nuevo) => {

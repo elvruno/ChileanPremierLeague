@@ -12,7 +12,6 @@ const Tabla = () => {
 
   return (
     <main className="container-fluid py-5">
-      {/* ===== TABLA DE POSICIONES ===== */}
       <section className="mb-5">
         <h2 className="section-title text-center mb-4">
           Tabla de Posiciones - Campeonato Chileno 2025
@@ -55,8 +54,6 @@ const Tabla = () => {
           </table>
         </div>
       </section>
-
-      {/* ===== PARTIDOS ===== */}
       <section>
         <h2 className="section-title text-center mb-4">Jornada 25 de 30</h2>
         <div className="row g-4">

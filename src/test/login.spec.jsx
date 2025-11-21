@@ -46,8 +46,6 @@ describe("Login - pruebas unitarias", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: /Iniciar sesión/i }));
-
-    // ✅ No debe navegar porque los campos están vacíos
     expect(mockNavigate).not.toHaveBeenCalled();
   });
 
@@ -63,8 +61,6 @@ describe("Login - pruebas unitarias", () => {
     fireEvent.click(
       screen.getByRole("button", { name: /Entrar como Invitado/i })
     );
-
-    // ✅ Debe navegar directamente a /tabla
     expect(mockNavigate).toHaveBeenCalledWith("/tabla");
   });
 });

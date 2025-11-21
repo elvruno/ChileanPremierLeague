@@ -21,17 +21,13 @@ const AdminPanel = () => {
     setPartidos(getPartidos());
   }, []);
 
-  // ================= HANDLERS EQUIPOS =================
   const handleSubmitEquipo = (e) => {
     e.preventDefault();
     const form = e.target;
-
-    // Procesar logo (file input o existente)
     const logoFile = form.logo.files[0];
     const logoUrl = logoFile
       ? URL.createObjectURL(logoFile)
       : editEquipo?.logo || "/Imagenes/default.png";
-
     const nuevo = {
       nombre: form.nombre.value,
       logo: logoUrl,
@@ -58,8 +54,6 @@ const AdminPanel = () => {
     deleteEquipo(id);
     setEquipos(getEquipos());
   };
-
-  // ================= HANDLERS PARTIDOS =================
   const handleSubmitPartido = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -95,8 +89,6 @@ const AdminPanel = () => {
   return (
     <main className="container py-6">
       <h1 className="text-center mb-7">Panel de Administración</h1>
-
-      {/* ================= EQUIPOS ================= */}
       <section className="mb-5">
         <h3>Equipos</h3>
         <table className="table table-bordered text-center">
@@ -161,8 +153,6 @@ const AdminPanel = () => {
           Agregar Equipo
         </button>
       </section>
-
-      {/* ================= PARTIDOS ================= */}
       <section>
         <h3>Partidos</h3>
         <table className="table table-bordered text-center">
@@ -220,8 +210,6 @@ const AdminPanel = () => {
           Agregar Partido
         </button>
       </section>
-
-      {/* ================= MODAL EQUIPOS ================= */}
       <div className="modal fade" id="equipoModal" tabIndex="-1">
         <div className="modal-dialog">
           <div className="modal-content">
@@ -332,8 +320,6 @@ const AdminPanel = () => {
           </div>
         </div>
       </div>
-
-      {/* ================= MODAL PARTIDOS ================= */}
       <div className="modal fade" id="partidoModal" tabIndex="-1">
         <div className="modal-dialog">
           <div className="modal-content">

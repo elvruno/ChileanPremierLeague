@@ -12,8 +12,6 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // ✅ 1. Buscar usuario en localStorage
     const usuariosLocal = JSON.parse(localStorage.getItem("usuarios")) || [];
     const usuarioLocal = usuariosLocal.find(
       (u) => u.email === email && u.password === password
@@ -23,7 +21,6 @@ export default function Login() {
       sessionStorage.setItem("usuario", JSON.stringify(usuarioLocal));
       mostrarMensaje(setMensaje, "Inicio de sesión exitoso", "success");
       setTimeout(() => {
-        // 🚀 Si es admin, va al panel
         if (usuarioLocal.email === "admin@test.com") {
           navigate("/admin");
         } else {
@@ -33,8 +30,6 @@ export default function Login() {
       }, 1500);
       return;
     }
-
-    // ✅ 2. Si no existe en localStorage, intenta en Mockable.io
     try {
       const res = await fetch("http://demo3526643.mockable.io/usuarios");
       if (!res.ok) throw new Error("Error en el servidor remoto");
@@ -48,7 +43,6 @@ export default function Login() {
         sessionStorage.setItem("usuario", JSON.stringify(usuarioMock));
         mostrarMensaje(setMensaje, "Inicio de sesión exitoso", "success");
         setTimeout(() => {
-          // 🚀 Si es admin, va al panel
           if (usuarioMock.email === "admin@test.com") {
             navigate("/admin");
           } else {

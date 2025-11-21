@@ -41,23 +41,18 @@ function Registro() {
       setMensaje("Las contraseñas no coinciden.");
       return;
     }
-
     const nuevoUsuario = { nombre, email: correo, equipo, password };
-
     try {
-      // ✅ Guardamos usuario en localStorage (NO Mockable)
       const usuariosGuardados =
         JSON.parse(localStorage.getItem("usuarios")) || [];
       usuariosGuardados.push(nuevoUsuario);
       localStorage.setItem("usuarios", JSON.stringify(usuariosGuardados));
 
       setMensaje("¡Registro exitoso! Ahora puedes iniciar sesión.");
-
-      // 🚀 Diferencia entre entorno real y entorno de test
       if (process.env.NODE_ENV === "test") {
-        navigate("/"); // instantáneo en test
+        navigate("/"); 
       } else {
-        setTimeout(() => navigate("/"), 2000); // delay en producción
+        setTimeout(() => navigate("/"), 2000); 
       }
     } catch (error) {
       console.error("Error en registro:", error);

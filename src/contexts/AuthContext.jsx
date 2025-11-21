@@ -30,13 +30,10 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  // 🔥 login actualizado con Mockable.io
   const login = async ({ email, password }) => {
     try {
-      // 1. Consultar primero al endpoint de Mockable.io
       const response = await fetch("https://demo3526643.mockable.io/usuarios");
       const usuariosMock = await response.json();
-
       const userMock = usuariosMock.find(
         (u) => u.email === email && u.password === password
       );
@@ -47,8 +44,6 @@ export const AuthProvider = ({ children }) => {
         sessionStorage.setItem("usuario", JSON.stringify(userData));
         return { success: true, source: "mockable" };
       }
-
-      // 2. Si no existe en Mockable, buscar en localStorage
       const userLocal = usuarios.find(
         (u) => u.email === email && u.password === password
       );
