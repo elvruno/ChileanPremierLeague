@@ -1,106 +1,82 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
+import { API_URL } from "../api";
 
 export default function Login() {
-  const { mostrarMensaje } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mensaje, setMensaje] = useState(null);
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const usuariosLocal = JSON.parse(localStorage.getItem("usuarios")) || [];
-    const usuarioLocal = usuariosLocal.find(
-      (u) => u.email === email && u.password === password
-    );
 
-    if (usuarioLocal) {
-      sessionStorage.setItem("usuario", JSON.stringify(usuarioLocal));
-      mostrarMensaje(setMensaje, "Inicio de sesión exitoso", "success");
-      setTimeout(() => {
-        if (usuarioLocal.email === "admin@test.com") {
-          navigate("/admin");
-        } else {
-          navigate("/tabla");
-        }
-        window.location.reload();
-      }, 1500);
-      return;
-    }
     try {
-      const res = await fetch("http://demo3526643.mockable.io/usuarios");
-      if (!res.ok) throw new Error("Error en el servidor remoto");
+      const res = await fetch(`${API_URL}/api/v1/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-      const usuariosMock = await res.json();
-      const usuarioMock = usuariosMock.find(
+      if (res.ok) {
+        const data = await res.json();
+        sessionStorage.setItem("token", data.token);
+        sessionStorage.setItem("usuario", JSON.stringify(data.usuario));
+
+        setMensaje("Login exitoso");
+        setTimeout(() => navigate("/tabla"), 1000);
+        return;
+      }
+    } catch (err) {
+      console.error("Backend no responde");
+    }
+
+    try {
+      const res = await fetch("https://demo3526643.mockable.io/usuarios");
+      const usuarios = await res.json();
+      const user = usuarios.find(
         (u) => u.email === email && u.password === password
       );
 
-      if (usuarioMock) {
-        sessionStorage.setItem("usuario", JSON.stringify(usuarioMock));
-        mostrarMensaje(setMensaje, "Inicio de sesión exitoso", "success");
-        setTimeout(() => {
-          if (usuarioMock.email === "admin@test.com") {
-            navigate("/admin");
-          } else {
-            navigate("/tabla");
-          }
-          window.location.reload();
-        }, 1500);
-      } else {
-        mostrarMensaje(setMensaje, "Correo o contraseña incorrectos", "danger");
+      if (user) {
+        sessionStorage.setItem("usuario", JSON.stringify(user));
+        setMensaje("Login admin (mockable)");
+        setTimeout(() => navigate("/admin"), 1000);
+        return;
       }
-    } catch (error) {
-      console.error("Error al conectar con Mockable:", error);
-      mostrarMensaje(setMensaje, "Error al conectar con el servidor.", "danger");
+    } catch (err) {
+      console.error("Mockable falló");
     }
+
+    setMensaje("Credenciales inválidas ");
   };
 
   return (
     <div className="container mt-5">
-      <h2 className="text-center mb-4">Inicio de sesión</h2>
-      <form onSubmit={handleSubmit} className="mx-auto" style={{ maxWidth: "550px" }}>
-        <div className="mb-4">
-          <input
-            type="email"
-            placeholder="Correo electrónico"
-            className="form-control"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <input
-            type="password"
-            placeholder="Contraseña"
-            className="form-control"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" className="btn btn-primary w-100">
-          Iniciar sesión
-        </button>
-        <div className="d-grid gap-2 mt-4">
-          <button
-            type="button"
-            className="btn-invitado"
-            onClick={() => navigate("/tabla")}
-          >
-            Entrar como Invitado
-          </button>
-        </div>
+      <h2 className="text-center">Login</h2>
+
+      <form onSubmit={handleSubmit}>
+        <input
+          className="form-control mb-3"
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          className="form-control mb-3"
+          type="password"
+          placeholder="Contraseña"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button className="btn btn-primary w-100">Entrar</button>
       </form>
 
-      <div className="mt-3">{mensaje}</div>
+      {mensaje && <div className="alert alert-info mt-3">{mensaje}</div>}
 
       <p className="mt-3 text-center">
-        ¿No tienes cuenta? <Link to="/registro">Regístrate aquí</Link>
+        ¿No tienes cuenta? <Link to="/registro">Regístrate</Link>
       </p>
     </div>
   );
