@@ -8,9 +8,14 @@ const NavBar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
       <div className="container-fluid">
-        <Link className="navbar-brand fw-bold text-uppercase" to="/tabla">
+        <Link className="navbar-brand fw-bold text-uppercase d-none d-sm-block" to="/tabla">
           Chilean Premier League
         </Link>
+
+        <Link className="navbar-brand fw-bold text-uppercase d-block d-sm-none" to="/tabla">
+          CPL
+        </Link>
+
 
         <button
           className="navbar-toggler"

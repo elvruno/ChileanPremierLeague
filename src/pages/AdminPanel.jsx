@@ -91,6 +91,7 @@ const AdminPanel = () => {
       <h1 className="text-center mb-7">Panel de Administración</h1>
       <section className="mb-5">
         <h3>Equipos</h3>
+        <div className="table-responsive">
         <table className="table table-bordered text-center">
           <thead className="table-dark">
             <tr>
@@ -143,6 +144,7 @@ const AdminPanel = () => {
             ))}
           </tbody>
         </table>
+        </div>
 
         <button
           className="btn btn-success"
@@ -155,6 +157,7 @@ const AdminPanel = () => {
       </section>
       <section>
         <h3>Partidos</h3>
+        <div className="table-responsive">
         <table className="table table-bordered text-center">
           <thead className="table-dark">
             <tr>
@@ -200,6 +203,7 @@ const AdminPanel = () => {
             ))}
           </tbody>
         </table>
+        </div>
 
         <button
           className="btn btn-success"

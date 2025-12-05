@@ -284,4 +284,50 @@ tbody tr:nth-child(odd) {
     transform: scale(1.1);
     transition: 0.3s ease;
   }
+
+  nav.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .navbar-brand {
+    font-size: 1.1rem !important;
+    white-space: nowrap !important;
+  }
+
+  .navbar-nav {
+    text-align: left !important;
+  }
+
+  @media (max-width: 768px) {
+    .navbar-brand {
+      font-size: 1rem !important;
+    }
+
+    .navbar-nav .nav-link {
+      padding: 0.7rem 0 !important;
+    }
+
+    .navbar-toggler {
+      margin-left: auto;
+    }
+
+    .navbar-collapse {
+      background: #212529;
+      padding: 1rem;
+      border-radius: 0 0 10px 10px;
+    }
+  }
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  html, body {
+    overflow-x: hidden !important;
+  }
+
+
 }
