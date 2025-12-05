@@ -114,7 +114,6 @@ form input:focus {
   padding: 0.9rem;
   font-size: 1rem;
   cursor: pointer;
-  text-align: center;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   margin-top: 0.8rem;
@@ -124,33 +123,6 @@ form input:focus {
   background: linear-gradient(135deg, #157347, #115c39);
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-}
-
-#mensajeLogin,
-#mensajeRegistro,
-#mensajeConfirmacion {
-  font-weight: 600;
-  text-align: center;
-  margin-top: 1rem;
-}
-
-.card-profile {
-  max-width: 500px;
-  margin: 3rem auto;
-  background: white;
-  padding: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(13, 110, 253, 0.15);
-  text-align: center;
-}
-
-.card-profile .custom-image {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 1rem;
-  box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3);
 }
 
 .table {
@@ -176,6 +148,12 @@ tbody tr:nth-child(odd) {
   background-color: #f1f7ff;
 }
 
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .team-logo,
 .team-logo-match {
   width: 35px;
@@ -194,7 +172,7 @@ tbody tr:nth-child(odd) {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: wrap; 
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -259,10 +237,22 @@ tbody tr:nth-child(odd) {
 }
 
 @media (max-width: 768px) {
+
+  html, body {
+    overflow-x: hidden !important;
+  }
+
   .team-logo,
   .team-logo-match {
     width: 28px;
     height: 28px;
+  }
+
+  .match-card {
+    padding: 0.7rem;
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
   }
 
   .vs-text {
@@ -270,19 +260,18 @@ tbody tr:nth-child(odd) {
     margin: 0 5px;
   }
 
+  .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
   form {
-    margin: 1.5rem 1rem;
+    margin: 1rem;
     padding: 1.5rem;
   }
 
   .news-container {
     grid-template-columns: 1fr;
-  }
-
-  .footer a:hover {
-    color: #0d6efd;
-    transform: scale(1.1);
-    transition: 0.3s ease;
   }
 
   nav.navbar {
@@ -292,42 +281,21 @@ tbody tr:nth-child(odd) {
   }
 
   .navbar-brand {
-    font-size: 1.1rem !important;
+    font-size: 1rem !important;
     white-space: nowrap !important;
   }
 
-  .navbar-nav {
-    text-align: left !important;
+  .navbar-nav .nav-link {
+    padding: 0.7rem 0 !important;
   }
 
-  @media (max-width: 768px) {
-    .navbar-brand {
-      font-size: 1rem !important;
-    }
-
-    .navbar-nav .nav-link {
-      padding: 0.7rem 0 !important;
-    }
-
-    .navbar-toggler {
-      margin-left: auto;
-    }
-
-    .navbar-collapse {
-      background: #212529;
-      padding: 1rem;
-      border-radius: 0 0 10px 10px;
-    }
-  }
-  .table-responsive {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+  .navbar-toggler {
+    margin-left: auto;
   }
 
-  html, body {
-    overflow-x: hidden !important;
+  .navbar-collapse {
+    background: #212529;
+    padding: 1rem;
+    border-radius: 0 0 10px 10px;
   }
-
-
 }
